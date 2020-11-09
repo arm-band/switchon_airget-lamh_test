@@ -1,0 +1,41 @@
+@charset "utf-8";
+
+#switch {
+    /* ラッパーが block 要素で横幅いっぱいのときに text-center で中央に寄せると、
+     * チェックボックス本体は左端に留まってしまう。
+     * そのため、変な場所をクリックするとスイッチのオン/オフが切り替わるので
+     * pointer-events を無効化する */
+    pointer-events: none;
+}
+.custom-switch {
+    $width: 3.5rem;
+    $outer-width: ($width + 1rem);
+    $height: 2rem;
+    $slide-width: $width - 2rem;
+    .custom-control-label {
+        cursor: pointer;
+        @media (max-width: 465px) {
+            display: inline;
+        }
+        &::before {
+            left: -1 * $outer-width;
+            width: $width;
+            height: $height;
+            border-radius: $height / 2;
+        }
+        &::after {
+            left: calc(-1 * #{$outer-width} + 2px);
+            width: calc(#{$height} - 4px);
+            height: calc(#{$height} - 4px);
+            border-radius: $height / 2;
+        }
+    }
+    .custom-control-input:checked ~ .custom-control-label::after {
+        background-color: #fff;
+        transform: translateX($slide-width);
+    }
+    span {
+        font-size: 1.25rem;
+        line-height: 2;
+    }
+}
